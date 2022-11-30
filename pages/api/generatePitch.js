@@ -10,7 +10,6 @@ const basePromptPrefix = `write me a professional startup business pitch to inve
 
 const generateAction = async (req, res) => {
   // Run first prompt
-  // console.log(`API: ${basePromptPrefix}${req.body.selected}`);
 
   const baseCompletion = await openai.createCompletion({
     model: "text-davinci-003",
