@@ -6,7 +6,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const basePromptPrefix = `write me a professional startup business pitch to investors about the title below.Go deep into why they should invest. Explain how this relates to the title. `;
+const basePromptPrefix = `write me a professional startup business pitch to investors about the title below.Go deep into why they should invest. Explain how this relates to the title:`;
 
 const generateAction = async (req, res) => {
   // Run first prompt
