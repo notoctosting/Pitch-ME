@@ -73,7 +73,7 @@ const Home = () => {
         return null;
       }
       return (
-        <div>
+        <div className="-">
           <div id="ideaButtons">
             <div className="d-grid gap-2">
               <Button variant="secondary" size="lg">
@@ -110,7 +110,7 @@ const Home = () => {
                   value={selected}
                   className="pitch-select"
                 >
-                  <option disabled selected>
+                  <option key={"-"} disabled defaultValue>
                     {" "}
                     --{" "}
                   </option>
@@ -131,7 +131,7 @@ const Home = () => {
                   >
                     <div className="generate">
                       {isGeneratingPitch ? (
-                        <span class="loader"></span>
+                        <span className="loader"></span>
                       ) : (
                         <p>Pitch</p>
                       )}
@@ -180,7 +180,11 @@ const Home = () => {
               onClick={callGenerateEndpoint}
             >
               <div className="generate">
-                {isGenerating ? <span class="loader"></span> : <p>Generate</p>}
+                {isGenerating ? (
+                  <span className="loader"></span>
+                ) : (
+                  <p>Generate</p>
+                )}
               </div>
             </a>
           </div>
