@@ -93,8 +93,6 @@ const Home = () => {
         { value: ideaArray[1], text: "Startup Idea 1" },
         { value: ideaArray[2], text: "Startup Idea 2" },
         { value: ideaArray[3], text: "Startup Idea 3" },
-        { value: ideaArray[4], text: "Startup Idea 4" },
-        { value: ideaArray[5], text: "Startup Idea 5" },
       ];
 
       return (
@@ -158,11 +156,12 @@ const Home = () => {
       <div className="container">
         <div className="header">
           <div className="header-title">
-            <h1>Welcome to PitchMe</h1>
+            <h1>Welcome, to PitchMe</h1>
           </div>
           <div className="header-subtitle">
             <h2>
-              Turn your interests to Startup ideas, to pitches, to infinity...
+              Turn <i> your interests</i> to Startup ideas, to pitches,{" "}
+              <i> to infinity...</i>
             </h2>
           </div>
         </div>

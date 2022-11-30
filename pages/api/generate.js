@@ -7,7 +7,8 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const basePromptPrefix =
-  "List 5 creative, forward-thinking business startup ideas relating to ";
+  "List 3 creative, forward-thinking business startup ideas relating to ";
+
 const generateAction = async (req, res) => {
   // Run first prompt
 
@@ -15,7 +16,7 @@ const generateAction = async (req, res) => {
     model: "text-davinci-003",
     prompt: `${basePromptPrefix}${req.body.userInput}`,
     temperature: 0.8,
-    max_tokens: 150,
+    max_tokens: 105,
     frequency_penalty: 1.5,
   });
 
