@@ -13,10 +13,10 @@ const generateAction = async (req, res) => {
   // Run first prompt
 
   const baseCompletion = await openai.createCompletion({
-    model: "text-davinci-002",
+    model: "text-davinci-003",
     prompt: `${basePromptPrefix}${req.body.userInput}`,
-    temperature: 0.8,
-    max_tokens: 205,
+    temperature: 0.84,
+    max_tokens: 250,
     frequency_penalty: 1.3,
   });
 
