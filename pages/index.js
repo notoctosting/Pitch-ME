@@ -3,16 +3,16 @@ import Image from "next/image";
 import DOSELogo from "../assets/DOSE-logo.png";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
-import buildspaceLogo from "../assets/buildspace-logo.png";
 
 const Home = () => {
   const [userInput, setUserInput] = useState("");
-  const [pitchInput, setPitchInput] = useState("");
   const [isGeneratingPitch, setIsGeneratingPitch] = useState(false);
   const [apiPitchOutput, setApiPitchOutput] = useState("");
   const [ideasGenerated, setIdeasGenerated] = useState(false);
   const [apiOutput, setApiOutput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [selected, setSelected] = useState();
+
   const callGenerateEndpoint = async () => {
     setIsGenerating(true);
 
@@ -43,7 +43,7 @@ const Home = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ pitchInput }),
+      body: JSON.stringify({ selected }),
     });
 
     const data = await response.json();
@@ -53,8 +53,9 @@ const Home = () => {
     setApiPitchOutput(`${output.text}`);
     setIsGeneratingPitch(false);
   };
-  const onPitchClick = (idea) => {
-    setPitchInput(idea);
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    setSelected(event.target.value);
   };
   const onUserChangedText = (event) => {
     setUserInput(event.target.value);
@@ -81,76 +82,76 @@ const Home = () => {
             </div>
             <p id="ideaText">{buttonText}</p>
           </div>
-          <div className="prompt-buttons">
-            <a
-              className={
-                isGeneratingPitch
-                  ? "generate-button-pitch loading"
-                  : "generate-button-pitch"
-              }
-              onClick={callGenerateEndpointPitch}
-            >
-              <div className="generate">
-                {isGeneratingPitch ? (
-                  <span class="loader"></span>
-                ) : (
-                  <p>Pitch</p>
-                )}
-              </div>
-            </a>
-          </div>
         </div>
       );
     });
   }
 
-  // function makePitch(ideaArray) {
-  //   console.log(ideaArray);
-  //   if (ideasGenerated) {
-  //     return (
-  //       <div className="prompt-Container">
-  //         {apiOutput && (
-  //           <div className="output">
-  //             <div className="output-header-container">
-  //               <div className="output-header">
-  //                 <h3>Select an Idea To pitch</h3>
-  //               </div>
-  //             </div>
-  //             <div className="output-content">
-  //               <select onChange={onUserChangedText} className="pitch-select">
-  //                 <option selected value={0}>
-  //                   Startup Idea 1
-  //                 </option>
-  //                 <option value={1}>Startup Idea 2</option>
-  //                 <option value={2}>Startup Idea 3</option>
-  //                 <option value={3}>Startup Idea 4</option>
-  //                 <option value={4}>Startup Idea 5</option>
-  //               </select>
-  //               <div className="prompt-buttons">
-  //                 <a
-  //                   className={
-  //                     isGenerating
-  //                       ? "generate-button loading"
-  //                       : "generate-button"
-  //                   }
-  //                   onClick={callGenerateEndpoint}
-  //                 >
-  //                   <div className="generate">
-  //                     {isGenerating ? (
-  //                       <span class="loader"></span>
-  //                     ) : (
-  //                       <p>Create</p>
-  //                     )}
-  //                   </div>
-  //                 </a>
-  //               </div>
-  //             </div>
-  //           </div>
-  //         )}
-  //       </div>
-  //     );
-  //   }
-  // }
+  const makePitch = (ideaArray) => {
+    if (ideasGenerated) {
+      const options = [
+        { value: ideaArray[1], text: "Startup Idea 1" },
+        { value: ideaArray[2], text: "Startup Idea 2" },
+        { value: ideaArray[3], text: "Startup Idea 3" },
+        { value: ideaArray[4], text: "Startup Idea 4" },
+        { value: ideaArray[5], text: "Startup Idea 5" },
+      ];
+
+      return (
+        <div className="prompt-Container">
+          {apiOutput && (
+            <div className="output">
+              <div className="output-header-container">
+                <div className="output-header">
+                  <h3>Select an Idea To pitch</h3>
+                </div>
+              </div>
+              <div className="output-content">
+                <select
+                  onChange={handleChange}
+                  value={selected}
+                  className="pitch-select"
+                >
+                  <option disabled selected>
+                    {" "}
+                    --{" "}
+                  </option>
+                  {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.text}
+                    </option>
+                  ))}
+                </select>
+                <div className="prompt-buttons">
+                  <a
+                    className={
+                      isGeneratingPitch
+                        ? "generate-button-pitch loading"
+                        : "generate-button-pitch"
+                    }
+                    onClick={callGenerateEndpointPitch}
+                  >
+                    <div className="generate">
+                      {isGeneratingPitch ? (
+                        <span class="loader"></span>
+                      ) : (
+                        <p>Pitch</p>
+                      )}
+                    </div>
+                  </a>
+                </div>
+                <div className="output">
+                  <div className="output-content">
+                    <p>{apiPitchOutput}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="root">
@@ -195,31 +196,19 @@ const Home = () => {
               <div className="output-content">
                 <div>{makeButtons(splitSentences(apiOutput))}</div>
               </div>
+              {makePitch(splitSentences(apiOutput))}
             </div>
           )}
         </div>
-        {/* {makePitch()} */}
       </div>
 
-      {/* <div className="badge-container grow">
+      <div className="badge-container grow">
         <a href="/" target="_blank" rel="noreferrer">
           <div className="badge">
             <Image src={DOSELogo} alt="buildspace logo" />
             <p>
               DoseDevelopments <sup>&copy;</sup>
             </p>
-          </div>
-        </a>
-      </div> */}
-      <div className="badge-container grow">
-        <a
-          href="https://buildspace.so/builds/ai-writer"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <div className="badge">
-            <Image src={buildspaceLogo} alt="buildspace logo" />
-            <p>build with buildspace</p>
           </div>
         </a>
       </div>
