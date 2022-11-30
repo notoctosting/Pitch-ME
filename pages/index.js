@@ -16,7 +16,7 @@ const Home = () => {
   const callGenerateEndpoint = async () => {
     setIsGenerating(true);
 
-    console.log("Calling OpenAI...");
+    console.log("generating genius ideas...");
     const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
@@ -27,7 +27,7 @@ const Home = () => {
 
     const data = await response.json();
     const { output } = data;
-    console.log("OpenAI replied...", output.text);
+    // console.log("OpenAI replied...", output.text);
 
     setApiOutput(`${output.text}`);
     setIsGenerating(false);
@@ -37,7 +37,7 @@ const Home = () => {
   const callGenerateEndpointPitch = async () => {
     setIsGeneratingPitch(true);
 
-    console.log("Calling OpenAI...");
+    console.log("generating genius ideas...");
     const response = await fetch("/api/generatePitch", {
       method: "POST",
       headers: {
@@ -48,13 +48,12 @@ const Home = () => {
 
     const data = await response.json();
     const { output } = data;
-    console.log("OpenAI replied...", output.text);
+    // console.log("OpenAI replied...", output.text);
 
     setApiPitchOutput(`${output.text}`);
     setIsGeneratingPitch(false);
   };
   const handleChange = (event) => {
-    console.log(event.target.value);
     setSelected(event.target.value);
   };
   const onUserChangedText = (event) => {
