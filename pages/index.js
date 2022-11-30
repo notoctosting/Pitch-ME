@@ -206,7 +206,7 @@ const Home = () => {
           <div className="badge">
             <Image src={DOSELogo} alt="buildspace logo" />
             <p>
-              DoseDevelopments <sup>&copy;</sup>
+              DoseOfEthan <sup>&copy;</sup>
             </p>
           </div>
         </a>
