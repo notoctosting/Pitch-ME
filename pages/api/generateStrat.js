@@ -6,18 +6,21 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const basePromptPrefix =
-  "List 3 evenly worded, creative, forward-thinking business startup ideas relating to ";
+const basePromptPrefix = `Generate a detailed business strategy about the business idea below; include a value propisition, Timeline, and monitization strategy about: 
+
+`;
 
 const generateAction = async (req, res) => {
   // Run first prompt
 
   const baseCompletion = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: `${basePromptPrefix}${req.body.userInput}`,
-    temperature: 0.9,
-    max_tokens: 150,
-    frequency_penalty: 1.3,
+    prompt: `${basePromptPrefix}${req.body.selected}
+
+    Business Strategy:`,
+    temperature: 0.84,
+    max_tokens: 400,
+    frequency_penalty: 1.5,
   });
 
   const basePromptOutput = baseCompletion.data.choices.pop();

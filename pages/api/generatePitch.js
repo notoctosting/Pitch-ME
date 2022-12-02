@@ -6,7 +6,8 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const basePromptPrefix = `write me a professional startup business pitch to investors about the title below.Go deep into why they should invest. Explain how this relates to the title:`;
+const basePromptPrefix = `write me a professional, startup business pitch to investors about the business idea below. Be convincing and concise. 
+Business idea:`;
 
 const generateAction = async (req, res) => {
   // Run first prompt
@@ -15,7 +16,7 @@ const generateAction = async (req, res) => {
     model: "text-davinci-003",
     prompt: `${basePromptPrefix}${req.body.selected}`,
     temperature: 0.84,
-    max_tokens: 1000,
+    max_tokens: 400,
     frequency_penalty: 1.5,
   });
 

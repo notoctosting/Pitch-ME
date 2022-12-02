@@ -6,11 +6,14 @@ import Button from "react-bootstrap/Button";
 
 const Home = () => {
   const [userInput, setUserInput] = useState("");
-  const [isGeneratingPitch, setIsGeneratingPitch] = useState(false);
   const [apiPitchOutput, setApiPitchOutput] = useState("");
   const [ideasGenerated, setIdeasGenerated] = useState(false);
+  const [pitchGenerated, setPitchGenerated] = useState(false);
   const [apiOutput, setApiOutput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isGeneratingPitch, setIsGeneratingPitch] = useState(false);
+  const [isGeneratingStrat, setIsGeneratingStrat] = useState(false);
+  const [apiStratOutput, setApiStratOutput] = useState("");
   const [selected, setSelected] = useState();
 
   const callGenerateEndpoint = async () => {
@@ -48,6 +51,24 @@ const Home = () => {
 
     setApiPitchOutput(`${output.text}`);
     setIsGeneratingPitch(false);
+    setPitchGenerated(true);
+  };
+  const callGenerateEndpointStrat = async () => {
+    setIsGeneratingStrat(true);
+
+    const response = await fetch("/api/generateStrat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ selected }),
+    });
+
+    const data = await response.json();
+    const { output } = data;
+
+    setApiStratOutput(`${output.text}`);
+    setIsGeneratingStrat(false);
   };
   const handleChange = (event) => {
     setSelected(event.target.value);
@@ -96,26 +117,26 @@ const Home = () => {
             <div className="output">
               <div className="output-header-container">
                 <div className="output-header">
-                  <h3>Select an Idea To pitch</h3>
+                  <h3>Select an Idea To Pitch:</h3>
                 </div>
               </div>
               <div className="output-content">
-                <select
-                  onChange={handleChange}
-                  value={selected}
-                  className="pitch-select"
-                >
-                  <option key={"-"} disabled defaultValue>
-                    {" "}
-                    --{" "}
-                  </option>
-                  {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.text}
+                <div className="prompt-buttons-pitch">
+                  <select
+                    onChange={handleChange}
+                    value={selected}
+                    className="pitch-select"
+                  >
+                    <option key={"-"} disabled selected>
+                      {" "}
+                      --{" "}
                     </option>
-                  ))}
-                </select>
-                <div className="prompt-buttons">
+                    {options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.text}
+                      </option>
+                    ))}
+                  </select>
                   <a
                     className={
                       isGeneratingPitch
@@ -128,7 +149,7 @@ const Home = () => {
                       {isGeneratingPitch ? (
                         <span className="loader"></span>
                       ) : (
-                        <p>Pitch</p>
+                        <p>Generate</p>
                       )}
                     </div>
                   </a>
@@ -136,6 +157,54 @@ const Home = () => {
                 <div className="output">
                   <div className="output-content">
                     <p>{apiPitchOutput}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+  };
+
+  const makeStrat = (selected) => {
+    if (pitchGenerated) {
+      return (
+        <div className="prompt-Container">
+          {apiOutput && (
+            <div className="output">
+              <div className="output-header-container">
+                <div className="header-subtitle">
+                  <h2>
+                    Still interested in <i>your</i> idea? Let's Strategize.
+                  </h2>
+                </div>
+                <div className="output-header">
+                  <h3>Build a Business Strategy:</h3>
+                </div>
+              </div>
+              <div className="output-content">
+                <div className="prompt-strat-buttons">
+                  <a
+                    className={
+                      isGeneratingStrat
+                        ? "generate-button-strat loading"
+                        : "generate-button-strat"
+                    }
+                    onClick={callGenerateEndpointStrat}
+                  >
+                    <div className="generate">
+                      {isGeneratingStrat ? (
+                        <span className="loader"></span>
+                      ) : (
+                        <p>Generate</p>
+                      )}
+                    </div>
+                  </a>
+                </div>
+                <div className="output">
+                  <div className="output-content">
+                    <p>{apiStratOutput}</p>
                   </div>
                 </div>
               </div>
@@ -194,7 +263,10 @@ const Home = () => {
               <div className="output-content">
                 <div>{makeButtons(splitSentences(apiOutput))}</div>
               </div>
-              {makePitch(splitSentences(apiOutput))}
+              <div className="output-content">
+                {makePitch(splitSentences(apiOutput))}
+              </div>
+              <div className="output-content">{makeStrat(selected)}</div>
             </div>
           )}
         </div>
