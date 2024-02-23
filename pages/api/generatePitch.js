@@ -6,7 +6,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const basePromptPrefix = `write me a professional, startup business pitch to investors about the business idea below. Be convincing and concise. 
+const basePromptPrefix = `write me a professional, concise, startup business pitch to investors about the business idea below. Be convincing and concise. 
 Business idea:`;
 
 const generateAction = async (req, res) => {

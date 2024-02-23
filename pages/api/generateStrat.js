@@ -6,7 +6,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const basePromptPrefix = `Generate a detailed business strategy about the business idea below; include a value propisition, Timeline, and monitization strategy about: 
+const basePromptPrefix = `Generate a detailed & concise business strategy about the business idea below; include a value propisition, Timeline, and monitization strategy about: 
 
 `;
 
