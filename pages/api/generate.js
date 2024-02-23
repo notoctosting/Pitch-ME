@@ -6,14 +6,13 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const basePromptPrefix =
-  "List 3 evenly worded, creative, forward-thinking business startup ideas relating to ";
+const basePromptPrefix = "List 3 evenly worded, creative, forward-thinking business startup ideas relating to ";
 
 const generateAction = async (req, res) => {
   // Run first prompt
 
   const baseCompletion = await openai.createCompletion({
-    model: "text-davinci-003",
+    model: "gpt-3.5-turbo-instruct",
     prompt: `${basePromptPrefix}${req.body.userInput}`,
     temperature: 0.9,
     max_tokens: 150,

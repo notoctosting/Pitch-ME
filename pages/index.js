@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
 import DOSELogo from "../assets/DOSE-logo.png";
-import { useState } from "react";
 import Button from "react-bootstrap/Button";
+
+import { useState } from "react";
 
 const Home = () => {
   const [userInput, setUserInput] = useState("");
@@ -122,41 +123,30 @@ const Home = () => {
               </div>
               <div className="output-content">
                 <div className="prompt-buttons-pitch">
-                  <select
-                    onChange={handleChange}
-                    value={selected}
-                    className="pitch-select"
-                  >
-                    <option key={"-"} disabled selected>
+                  <select onChange={handleChange} value={selected} className="pitch-select">
+                    <option key={"-"} disabled>
                       {" "}
                       --{" "}
                     </option>
                     {options.map((option) => (
-                      <option key={option.value} value={option.value}>
+                      <option selected key={option.value} value={option.value}>
                         {option.text}
                       </option>
                     ))}
                   </select>
                   <a
-                    className={
-                      isGeneratingPitch
-                        ? "generate-button-pitch loading"
-                        : "generate-button-pitch"
-                    }
+                    className={isGeneratingPitch ? "generate-button-pitch loading" : "generate-button-pitch"}
                     onClick={callGenerateEndpointPitch}
                   >
                     <div className="generate">
-                      {isGeneratingPitch ? (
-                        <span className="loader"></span>
-                      ) : (
-                        <p>Generate</p>
-                      )}
+                      {isGeneratingPitch ? <span className="loader"></span> : <p>Generate</p>}
                     </div>
                   </a>
                 </div>
                 <div className="output">
                   <div className="output-content">
                     <p>{apiPitchOutput}</p>
+                    <br></br>
                   </div>
                 </div>
               </div>
@@ -179,6 +169,7 @@ const Home = () => {
                     Still interested in <i>your</i> idea? Let's Strategize.
                   </h2>
                 </div>
+
                 <div className="output-header">
                   <h3>Build a Business Strategy:</h3>
                 </div>
@@ -186,25 +177,18 @@ const Home = () => {
               <div className="output-content">
                 <div className="prompt-strat-buttons">
                   <a
-                    className={
-                      isGeneratingStrat
-                        ? "generate-button-strat loading"
-                        : "generate-button-strat"
-                    }
+                    className={isGeneratingStrat ? "generate-button-strat loading" : "generate-button-strat"}
                     onClick={callGenerateEndpointStrat}
                   >
                     <div className="generate">
-                      {isGeneratingStrat ? (
-                        <span className="loader"></span>
-                      ) : (
-                        <p>Generate</p>
-                      )}
+                      {isGeneratingStrat ? <span className="loader"></span> : <p>Generate</p>}
                     </div>
                   </a>
                 </div>
                 <div className="output">
                   <div className="output-content">
                     <p>{apiStratOutput}</p>
+                    <br></br>
                   </div>
                 </div>
               </div>
@@ -220,12 +204,13 @@ const Home = () => {
       <div className="container">
         <div className="header">
           <div className="header-title">
-            <h1>Welcome, to PitchMe</h1>
+            <section>
+              <h1>Welcome, to PitchMe</h1>
+            </section>
           </div>
           <div className="header-subtitle">
             <h2>
-              Turn <i> your interests</i> to Startup ideas, to pitches,{" "}
-              <i> to infinity...</i>
+              Turn <i> your interests</i> to Startup ideas, to pitches, <i> to infinity...</i>
             </h2>
           </div>
         </div>
@@ -237,25 +222,15 @@ const Home = () => {
             onChange={onUserChangedText}
           />
           <div className="prompt-buttons">
-            <a
-              className={
-                isGenerating ? "generate-button loading" : "generate-button"
-              }
-              onClick={callGenerateEndpoint}
-            >
-              <div className="generate">
-                {isGenerating ? (
-                  <span className="loader"></span>
-                ) : (
-                  <p>Generate</p>
-                )}
-              </div>
+            <a className={isGenerating ? "generate-button loading" : "generate-button"} onClick={callGenerateEndpoint}>
+              <div className="generate">{isGenerating ? <span className="loader"></span> : <p>Generate</p>}</div>
             </a>
           </div>
 
           {apiOutput && (
             <div className="output">
               <div className="output-header-container">
+                ea
                 <div className="output-header">
                   <h3>Possible Startup Ideas</h3>
                 </div>
@@ -263,9 +238,7 @@ const Home = () => {
               <div className="output-content">
                 <div>{makeButtons(splitSentences(apiOutput))}</div>
               </div>
-              <div className="output-content">
-                {makePitch(splitSentences(apiOutput))}
-              </div>
+              <div className="output-content">{makePitch(splitSentences(apiOutput))}</div>
               <div className="output-content">{makeStrat(selected)}</div>
             </div>
           )}
